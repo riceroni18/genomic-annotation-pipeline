@@ -1,0 +1,6 @@
+# Force GitHub to recognize the project as Python
+*.py linguist-language=Python
+
+# Tell GitHub to ignore data and results files when calculating language stats
+data/* linguist-vendored
+results/* linguist-vendored
