@@ -8,7 +8,8 @@ tmhmm_matches = {}
 # =====================================================================
 # 2. READ THE HMM FILE LINE BY LINE (Tier 1 Evidence)
 # =====================================================================
-with open("hmmscan.htab", "r") as file:
+# Script is in scripts/, so ".." goes up to root, then down into data/
+with open("../data/hmmscan.htab", "r") as file:
     for line in file:
         if line.startswith("#"):
             continue
@@ -23,7 +24,7 @@ with open("hmmscan.htab", "r") as file:
 # =====================================================================
 # 3. READ THE BLAST FILE EXPORTED FROM MYSQL (Tier 2 Evidence)
 # =====================================================================
-with open("blast_results.txt", "r") as file:
+with open("../data/blast_results.txt", "r") as file:
     next(file)  # Skip the header line
     for line in file:
         columns = line.split("\t")
@@ -36,7 +37,7 @@ with open("blast_results.txt", "r") as file:
 # =====================================================================
 # 4. READ THE GENERATED TMHMM FILE (Tier 3 Evidence)
 # =====================================================================
-with open("prodigal2fasta.nostars.faa", "r") as file:
+with open("../data/prodigal2fasta.nostars.faa", "r") as file:
     for line in file:
         columns = line.strip().split()
         if not columns or len(columns) < 3:
@@ -57,25 +58,25 @@ with open("prodigal2fasta.nostars.faa", "r") as file:
 # =====================================================================
 # 5. PROCESS THE MAIN FASTA HEADERS AND APPLY HIERARCHY
 # =====================================================================
-output_file = open("final_annotations.txt", "w")
-output_file.write("Gene_ID\tFinal_Annotation\n") # Added file header
+# Saving the output report directly into the results/ folder
+with open("../results/final_annotations.txt", "w") as output_file:
+    output_file.write("Gene_ID\tFinal_Annotation\n") # Added file header
 
-with open("prodigal2fasta.nostars.faa", "r") as file:
-    for line in file:
-        if line.startswith(">"):
-            current_gene_id = line.replace(">", "").replace("_polypeptide", "").strip()
-            
-            # Reasoning Hierarchy execution
-            if current_gene_id in hmm_matches:
-                final_name = hmm_matches[current_gene_id]
-            elif current_gene_id in blast_matches:
-                final_name = blast_matches[current_gene_id]
-            elif tmhmm_matches.get(current_gene_id) == True:
-                final_name = "predicted transmembrane protein"
-            else:
-                final_name = "Hypothetical protein"
+    with open("../data/prodigal2fasta.nostars.faa", "r") as file:
+        for line in file:
+            if line.startswith(">"):
+                current_gene_id = line.replace(">", "").replace("_polypeptide", "").strip()
                 
-            output_file.write(current_gene_id + "\t" + final_name + "\n")
+                # Reasoning Hierarchy execution
+                if current_gene_id in hmm_matches:
+                    final_name = hmm_matches[current_gene_id]
+                elif current_gene_id in blast_matches:
+                    final_name = blast_matches[current_gene_id]
+                elif tmhmm_matches.get(current_gene_id) == True:
+                    final_name = "predicted transmembrane protein"
+                else:
+                    final_name = "Hypothetical protein"
+                    
+                output_file.write(current_gene_id + "\t" + final_name + "\n")
 
-output_file.close()
-print("Updated pipeline ran successfully! Check 'final_annotations.txt'.")
+print("Updated pipeline ran successfully! Check 'results/final_annotations.txt'.")
