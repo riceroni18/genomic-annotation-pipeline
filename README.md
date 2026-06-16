@@ -1,5 +1,6 @@
 # DNA Sequence Matcher: A 3-Step Gene Naming Tool
 
+A rule-based gene annotation pipeline implementing a tiered evidence-priority system across HMMER (profile homology), BLAST (sequence similarity), and TMHMM (transmembrane topology prediction) to assign functional gene names from unannotated genome data.
 When scientists sequence a new genome, they get a long string of DNA letters, but they don't know what those genes actually *do*. 
 
 This Python program acts like a smart judge. It takes a list of unknown genes, looks at three different types of lab evidence, and automatically picks the best name for each gene based on a strict priority rule.
