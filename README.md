@@ -1,5 +1,10 @@
 # DNA Sequence Matcher: Automated Gene Annotation Pipeline
 
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Bioinformatics](https://img.shields.io/badge/Bioinformatics-Pipeline-green)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 A Python-based bioinformatics pipeline that automatically assigns functional gene names to unknown genomic sequences by integrating multiple sources of biological evidence. The pipeline combines HMMER, BLAST, and TMHMM using a rule-based decision system to generate high-confidence gene annotations.
 
 ---
@@ -55,35 +60,26 @@ The pipeline evaluates each unknown gene using a prioritized evidence-based appr
 ## Project Structure
 
 ```
-genomic-annotation-pipeline/
+genomic-annotation-pipeline
 │
-├── scripts/
-│   └── annotate_pipeline.py
-│
-├── data/
-│   ├── input/
-│   └── reference/
-│
-├── results/
-│   ├── blast_results.txt
-│   ├── hmmscan.htab
-│   ├── tmhmm.long
-│   └── final_annotations.txt
-│
+├── scripts/               Python annotation pipeline
+├── data/                  Input genomic datasets
+├── results/               Annotation outputs
 └── README.md
 ```
 
 ---
 
-## Example Output
+# Results
 
-Input:
+### Input
+
 - Unknown genomic sequences
 - HMMER protein family matches
 - BLAST similarity results
 - TMHMM topology predictions
 
-Output:
+### Output
 
 ```
 Gene_ID         Annotation
@@ -127,7 +123,7 @@ python3 annotate_pipeline.py
 
 ---
 
-## Future Improvements
+## Future Developments
 
 - Support additional annotation databases (Pfam, InterPro)
 - Containerize the workflow using Docker
@@ -136,12 +132,3 @@ python3 annotate_pipeline.py
 - Improve scalability for larger genomic datasets
 
 ---
-
-## Author
-
-**Marina Rice**
-
-M.S. Bioinformatics Candidate | Clinical Genomics | Computational Biology
-
-GitHub: https://github.com/riceroni18
-LinkedIn: https://linkedin.com/in/marina-rice-3071a1a9
