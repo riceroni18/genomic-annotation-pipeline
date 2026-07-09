@@ -3,7 +3,6 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
 ![Bioinformatics](https://img.shields.io/badge/Bioinformatics-Pipeline-green)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 A Python-based bioinformatics pipeline that automatically assigns functional gene names to unknown genomic sequences by integrating multiple sources of biological evidence. The pipeline combines HMMER, BLAST, and TMHMM using a rule-based decision system to generate high-confidence gene annotations.
 
@@ -82,11 +81,12 @@ genomic-annotation-pipeline
 ### Output
 
 ```
-Gene_ID         Annotation
-gene_001        DNA helicase
-gene_002        ATP synthase subunit
-gene_003        Predicted transmembrane protein
-gene_004        Hypothetical protein
+| Gene ID | Annotation |
+|----------|------------|
+| gene_001 | DNA helicase |
+| gene_002 | ATP synthase subunit |
+| gene_003 | Predicted transmembrane protein |
+| gene_004 | Hypothetical protein |
 ```
 
 The final output is a tab-delimited annotation table that assigns functional gene names based on the highest-confidence biological evidence available.
