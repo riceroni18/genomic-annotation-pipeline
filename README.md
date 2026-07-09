@@ -1,38 +1,147 @@
-# DNA Sequence Matcher: A 3-Step Gene Naming Tool
+# DNA Sequence Matcher: Automated Gene Annotation Pipeline
 
-A rule-based gene annotation pipeline implementing a tiered evidence-priority system across HMMER (profile homology), BLAST (sequence similarity), and TMHMM (transmembrane topology prediction) to assign functional gene names from unannotated genome data.
-When scientists sequence a new genome, they get a long string of DNA letters, but they don't know what those genes actually *do*. 
+A Python-based bioinformatics pipeline that automatically assigns functional gene names to unknown genomic sequences by integrating multiple sources of biological evidence. The pipeline combines HMMER, BLAST, and TMHMM using a rule-based decision system to generate high-confidence gene annotations.
 
-This Python program acts like a smart judge. It takes a list of unknown genes, looks at three different types of lab evidence, and automatically picks the best name for each gene based on a strict priority rule.
+---
 
-## How the Program Decides the Winner
+## Why This Project?
 
-For every single gene, the script runs through this simple checklist:
+Newly sequenced genomes often contain thousands of genes with unknown biological function. Manual annotation is time-consuming and requires evaluating multiple sources of evidence. This project demonstrates how computational workflows can automate functional gene annotation by integrating sequence similarity, protein family information, and protein topology predictions into a single reproducible pipeline.
 
-1. **Rule 1: Look for a "Family Match" (Highest Priority)**
-   It checks the `hmmscan.htab` file first. This file looks for deep evolutionary shapes. If it finds a solid match here, the script names the gene right away and stops looking.
-   
-2. **Rule 2: Look for a "Twin Match" (Second Priority)**
-   If Rule 1 finds nothing, the script checks the `blast_results.txt` file (which holds matches exported from a database). It looks for genes with highly similar sequences and grabs the best match.
-   
-3. **Rule 3: Check the "Location" (Third Priority)**
-   If there is no family or twin match, we don't know the gene's function. But the script checks the `tmhmm.long` file to see if the protein sits inside a cell membrane. If it does, it names it a `predicted transmembrane protein`.
-   
-4. **The Catch-All: "The Mystery Gene"**
-   If a gene fails all three rules, the script safely labels it a `Hypothetical protein`.
+---
 
-## The Files Used
+## Features
 
-* `annotate_pipeline.py` - The main Python program you run.
-* `prodigal2fasta.nostars.faa` - The master checklist of all your unknown genes.
-* `hmmscan.htab` - The file holding the "Family Matches."
-* `blast_results.txt` - The file holding the "Twin Matches."
-* `prodigal2fasta.nostars.tmhmm.long` - The file holding the cell membrane location info.
-* `final_annotations.txt` - The final spreadsheet created by the program showing each gene and its new name.
+- Performs protein family identification using **HMMER**
+- Identifies homologous sequences using **BLAST**
+- Predicts transmembrane proteins using **TMHMM**
+- Applies a rule-based evidence hierarchy to assign functional gene names
+- Generates a final annotation table for downstream biological analysis
 
-## How to Run It
+---
 
-Make sure all your files are in the same folder, open your terminal, and type:
+## Technologies Used
+
+- Python
+- HMMER
+- BLAST
+- TMHMM
+- Linux
+- Bioinformatics
+
+---
+
+## Pipeline Workflow
+
+The pipeline evaluates each unknown gene using a prioritized evidence-based approach:
+
+1. **Protein Family Match (Highest Priority)**
+   - Searches HMMER results for conserved protein domains.
+   - Assigns the associated gene function when a confident match is identified.
+
+2. **Sequence Similarity Search**
+   - If no HMMER match exists, evaluates BLAST sequence similarity results.
+   - Assigns the highest-confidence homologous annotation.
+
+3. **Transmembrane Protein Prediction**
+   - If no sequence match is identified, evaluates TMHMM predictions.
+   - Labels proteins predicted to contain transmembrane domains.
+
+4. **Fallback Annotation**
+   - Genes lacking supporting evidence are labeled as **Hypothetical Protein**.
+
+---
+
+## Project Structure
+
+```
+genomic-annotation-pipeline/
+│
+├── scripts/
+│   └── annotate_pipeline.py
+│
+├── data/
+│   ├── input/
+│   └── reference/
+│
+├── results/
+│   ├── blast_results.txt
+│   ├── hmmscan.htab
+│   ├── tmhmm.long
+│   └── final_annotations.txt
+│
+└── README.md
+```
+
+---
+
+## Example Output
+
+Input:
+- Unknown genomic sequences
+- HMMER protein family matches
+- BLAST similarity results
+- TMHMM topology predictions
+
+Output:
+
+```
+Gene_ID         Annotation
+gene_001        DNA helicase
+gene_002        ATP synthase subunit
+gene_003        Predicted transmembrane protein
+gene_004        Hypothetical protein
+```
+
+The final output is a tab-delimited annotation table that assigns functional gene names based on the highest-confidence biological evidence available.
+
+---
+
+## How to Run
+
+Clone the repository:
+
+```bash
+git clone https://github.com/riceroni18/genomic-annotation-pipeline.git
+cd genomic-annotation-pipeline
+```
+
+Run the pipeline:
 
 ```bash
 python3 annotate_pipeline.py
+```
+
+---
+
+## Skills Demonstrated
+
+- Bioinformatics pipeline development
+- Python programming
+- Functional gene annotation
+- Comparative genomics
+- Sequence analysis
+- Scientific workflow design
+- Data integration
+- Linux command line
+
+---
+
+## Future Improvements
+
+- Support additional annotation databases (Pfam, InterPro)
+- Containerize the workflow using Docker
+- Convert the pipeline into a Nextflow workflow
+- Generate interactive summary reports
+- Improve scalability for larger genomic datasets
+
+---
+
+## Author
+
+**Marina Rice**
+
+M.S. Bioinformatics Candidate | Clinical Genomics | Computational Biology
+
+GitHub: https://github.com/riceroni18
+LinkedIn: https://linkedin.com/in/marina-rice-3071a1a9
